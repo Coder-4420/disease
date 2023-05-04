@@ -28,15 +28,19 @@ def home():
 
 @app.route('/predict', methods = ['POST'])
 def predict():
-	symptoms=request.form.get('symptoms')
-	symptoms = symptoms.split(",")
-	input_data = [0] * len(data_dict["symptom_index"])
-	for symptom in symptoms:
-		index = data_dict["symptom_index"][symptom]
-		input_data[index] = 1
-	input_data[index] = input_data = np.array(input_data).reshape(1,-1)
-	rf_prediction = data_dict["predictions_classes"][model.predict(input_data)[0]]
-	return jsonify({'disease': rf_prediction})
+	try:
+		symptoms=request.form.get('symptoms')
+		symptoms = symptoms.split(",")
+		input_data = [0] * len(data_dict["symptom_index"])
+		for symptom in symptoms:
+			index = data_dict["symptom_index"][symptom]
+			input_data[index] = 1
+		input_data[index] = input_data = np.array(input_data).reshape(1,-1)
+		rf_prediction = data_dict["predictions_classes"][model.predict(input_data)[0]]
+		return jsonify({'disease': rf_prediction})
+	except:
+		return jsonify({'disease': "error"})
+		
 
 	
 	
