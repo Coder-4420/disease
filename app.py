@@ -30,6 +30,7 @@ def home():
 def predict():
 	try:
 		symptoms=request.form.get('symptoms')
+		symptoms=str(symptoms)
 		symptoms = symptoms.split(",")
 		input_data = [0] * len(data_dict["symptom_index"])
 		for symptom in symptoms:
